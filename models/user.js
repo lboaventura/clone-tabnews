@@ -9,14 +9,14 @@ async function findOneByUsername(username) {
   async function runSelectQuery(username) {
     const results = await database.query({
       text: `
-      SELECT
-        *
-      FROM 
-        users
-      WHERE
-        LOWER(username) = LOWER($1)
-      LIMIT
-        1
+        SELECT
+          *
+        FROM 
+          users
+        WHERE
+          LOWER(username) = LOWER($1)
+        LIMIT
+          1
       ;`,
       values: [username],
     });
@@ -43,12 +43,12 @@ async function create(userInputValues) {
   async function runInsertQuery(userInputValues) {
     const results = await database.query({
       text: `
-      INSERT INTO 
-        users (username, email, password)
-      VALUES 
-        ($1, $2, $3)
-      RETURNING
-        *
+        INSERT INTO 
+          users (username, email, password)
+        VALUES 
+          ($1, $2, $3)
+        RETURNING
+          *
       ;`,
       values: [
         userInputValues.username,
@@ -95,7 +95,7 @@ async function update(username, userInputValues) {
           id = $1
         RETURNING
           *          
-      `,
+      ;`,
       values: [
         userWithNewValues.id,
         userWithNewValues.username,
@@ -117,7 +117,7 @@ async function validateUniqueUsername(username) {
         users
       WHERE
         LOWER(username) = LOWER($1)
-      ;`,
+    ;`,
     values: [username],
   });
 
@@ -138,7 +138,7 @@ async function validateUniqueEmail(email) {
         users
       WHERE
         LOWER(email) = LOWER($1)
-      ;`,
+    ;`,
     values: [email],
   });
 
